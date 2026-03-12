@@ -1,7 +1,7 @@
 // --- 15 fixed players ---
 const surveyItems = [
-  {player:"Player1", img:"images/player1.jpg", text:"Description 1"},
-  {player:"Player2", img:"images/player2.jpg", text:"Description 2"},
+  {player:"Player1", img:"images/player1.png", text:"Description 1"},
+  {player:"Player2", img:"images/player2.png", text:"Description 2"},
   {player:"Player3", img:"images/player3.jpg", text:"Description 3"},
   {player:"Player4", img:"images/player4.jpg", text:"Description 4"},
   {player:"Player5", img:"images/player5.jpg", text:"Description 5"},
