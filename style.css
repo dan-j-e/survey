@@ -1,87 +1,87 @@
 body {
-  font-family: Arial, sans-serif;
-  max-width: 700px;
-  margin: auto;
-  padding: 20px;
+  font-family: 'Segoe UI', Arial, sans-serif;
   background: #f7f7f7;
-}
-
-h2 { text-align: center; }
-
-.progress-container {
-  width: 100%;
-  background: #ddd;
-  border-radius: 10px;
-  height: 12px;
-  margin-bottom: 20px;
-}
-
-#progressBar {
-  height: 12px;
-  width: 0%;
-  background: #4CAF50;
-  border-radius: 10px;
-  transition: width 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 20px;
 }
 
 .card {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 700px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   margin-bottom: 20px;
-  text-align: center;
 }
 
-.card img {
+#surveyImage {
   width: 100%;
   border-radius: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 #questions {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
-.question label {
-  margin-right: 8px;
-  font-size: 16px;
+button#nextBtn {
+  padding: 14px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background: #4CAF50;
+  color: white;
   cursor: pointer;
+  margin-bottom: 30px;
+  transition: background 0.2s;
 }
 
-input[type="radio"] {
-  /* keep input focusable, make invisible */
-  opacity: 0;
-  width: 35px;
-  height: 35px;
-  position: absolute;
-  margin: 0;
-  cursor: pointer;
+button#nextBtn:hover {
+  background: #45a049;
 }
 
-input[type="radio"] + span {
-  display: inline-block;
-  width: 35px;
-  height: 35px;
-  line-height: 35px;
-  border-radius: 50%;
-  background: #ddd;
+h2#progressText {
   text-align: center;
-  user-select: none;
-  margin-right: 8px;
-  transition: all 0.2s;
+  margin-bottom: 10px;
 }
 
-/* checked state */
+@media (max-width: 480px) {
+  .card {
+    padding: 15px;
+  }
+
+  #questions label span {
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+  }
+
+  button#nextBtn {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+
 input[type="radio"]:checked + span {
   background: #4CAF50;
   color: white;
+  transform: scale(1.2);
+  transition: all 0.2s;
 }
 
-/* focus state (for keyboard tabbing) */
 input[type="radio"]:focus + span {
   outline: 2px solid #2196F3;
   outline-offset: 2px;
+}
+
+#surveyImage {
+  transition: opacity 0.3s ease-in-out;
 }
