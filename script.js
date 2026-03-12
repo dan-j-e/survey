@@ -1,93 +1,123 @@
-// --- 15 fixed players ---
-const surveyItems = [
-  {player:"Player1", img:"images/player1.png", text:"Description 1"},
-  {player:"Player2", img:"images/player2.png", text:"Description 2"},
-  {player:"Player3", img:"images/player3.jpg", text:"Description 3"},
-  {player:"Player4", img:"images/player4.jpg", text:"Description 4"},
-  {player:"Player5", img:"images/player5.jpg", text:"Description 5"},
-  {player:"Player6", img:"images/player6.jpg", text:"Description 6"},
-  {player:"Player7", img:"images/player7.jpg", text:"Description 7"},
-  {player:"Player8", img:"images/player8.jpg", text:"Description 8"},
-  {player:"Player9", img:"images/player9.jpg", text:"Description 9"},
-  {player:"Player10", img:"images/player10.jpg", text:"Description 10"},
-  {player:"Player11", img:"images/player11.jpg", text:"Description 11"},
-  {player:"Player12", img:"images/player12.jpg", text:"Description 12"},
-  {player:"Player13", img:"images/player13.jpg", text:"Description 13"},
-  {player:"Player14", img:"images/player14.jpg", text:"Description 14"},
-  {player:"Player15", img:"images/player15.jpg", text:"Description 15"},
+// ------------------- Survey Data -------------------
+const imageLibrary = [
+  {player:"Player1", img:"images/p1.png", text:"Player 1 description"},
+  {player:"Player2", img:"images/p2.png", text:"Player 2 description"},
+  {player:"Player3", img:"images/p3.jpg", text:"Player 3 description"},
+  {player:"Player4", img:"images/p4.jpg", text:"Player 4 description"},
+  {player:"Player5", img:"images/p5.jpg", text:"Player 5 description"},
+  {player:"Player6", img:"images/p6.jpg", text:"Player 6 description"},
+  {player:"Player7", img:"images/p7.jpg", text:"Player 7 description"},
+  {player:"Player8", img:"images/p8.jpg", text:"Player 8 description"},
+  {player:"Player9", img:"images/p9.jpg", text:"Player 9 description"},
+  {player:"Player10", img:"images/p10.jpg", text:"Player 10 description"},
+  {player:"Player11", img:"images/p11.jpg", text:"Player 11 description"},
+  {player:"Player12", img:"images/p12.jpg", text:"Player 12 description"},
+  {player:"Player13", img:"images/p13.jpg", text:"Player 13 description"},
+  {player:"Player14", img:"images/p14.jpg", text:"Player 14 description"},
+  {player:"Player15", img:"images/p15.jpg", text:"Player 15 description"},
 ];
 
+// ------------------- Variables -------------------
+const surveyItems = imageLibrary.slice(0, 15); // fixed 15 players
 let page = 0;
 let responses = [];
 
-// --- preload images ---
-surveyItems.forEach(item => {
-  const img = new Image();
-  img.src = item.img;
-});
+// ------------------- Load Page -------------------
+function loadPage() {
+  updateProgress();
 
-function loadPage(){
   const item = surveyItems[page];
-
   document.getElementById("surveyImage").src = item.img;
   document.getElementById("description").innerText = item.text;
-  document.getElementById("progressText").innerText =
-    `Page ${page+1} / ${surveyItems.length}`;
-
-  let percent = ((page)/surveyItems.length)*100;
-  document.getElementById("progressBar").style.width = percent + "%";
 
   let html = "";
-  for(let i=1;i<=5;i++){
+  for (let i = 1; i <= 5; i++) {
     html += `
-    <div class="question">
-      <p>Q${i}</p>
-      ${[0,1,2,3,4,5].map(n => `<label>
-        <input type="radio" name="q${i}" value="${n}">
-        <span>${n}</span>
-      </label>`).join("")}
-    </div>
+      <div class="question">
+        <p>Q${i}</p>
+        ${[0,1,2,3,4,5].map(v => `
+          <label>
+            <input type="radio" name="q${i}" value="${v}">
+            <span>${v}</span>
+          </label>
+        `).join('')}
+      </div>
     `;
   }
-
   document.getElementById("questions").innerHTML = html;
 
-  // ✅ Reset tab focus to first bubble
-  const firstInput = document.querySelector('input[name="q1"]');
-  if (firstInput) firstInput.focus();
+  // ------------------- Reset Next button -------------------
+  const nextBtn = document.getElementById("nextBtn");
+  nextBtn.disabled = true;
+
+  // Scroll questions to top
+  document.getElementById("questions-container").scrollTop = 0;
+
+  // ------------------- Add listeners to new radio buttons -------------------
+  const radios = document.querySelectorAll("#questions input[type=radio]");
+  radios.forEach(r => r.addEventListener("change", checkAllAnswered));
 }
 
-function nextPage(){
+// ------------------- Progress Bar -------------------
+function updateProgress() {
+  const fillPercent = (page / surveyItems.length) * 100;
+  document.getElementById('progress-fill').style.width = fillPercent + '%';
+  document.getElementById('progress-text').innerText = `${page + 1} / ${surveyItems.length}`;
+}
+
+// ------------------- Enable Next when all answered -------------------
+function checkAllAnswered() {
+  let allAnswered = true;
+  for (let i = 1; i <= 5; i++) {
+    if (!document.querySelector(`input[name="q${i}"]:checked`)) {
+      allAnswered = false;
+      break;
+    }
+  }
+  document.getElementById("nextBtn").disabled = !allAnswered;
+}
+
+// ------------------- Go to Next Page -------------------
+function nextPage() {
+  const nextBtn = document.getElementById("nextBtn");
+  nextBtn.disabled = true; // prevent double click
+
   let answers = [];
-  for(let i=1;i<=5;i++){
-    const selected = document.querySelector(`input[name="q${i}"]:checked`);
-    if(!selected){
+  for (let i = 1; i <= 5; i++) {
+    const checked = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!checked) {
       alert("Please answer all questions");
+      nextBtn.disabled = false;
       return;
     }
-    answers.push(selected.value);
+    answers.push(checked.value);
   }
 
-  const currentPlayer = surveyItems[page].player;
-  responses.push({player: currentPlayer, scores: answers});
+  responses.push({
+    player: surveyItems[page].player,
+    scores: answers
+  });
 
   page++;
-  if(page >= surveyItems.length){
+  if (page >= surveyItems.length) {
     submitSurvey();
   } else {
     loadPage();
   }
 }
 
-// --- send to Google Sheets ---
-function submitSurvey(){
-  fetch("YOUR_WEB_APP_URL", {
-    method:"POST",
+// ------------------- Submit Survey -------------------
+function submitSurvey() {
+  fetch("YOUR_GOOGLE_SCRIPT_URL_HERE", {
+    method: "POST",
     body: JSON.stringify(responses)
   });
-  document.body.innerHTML="<h2>Thank you for completing the survey!</h2>";
+
+  document.body.innerHTML = "<h2>Thank you for completing the survey!</h2>";
 }
 
+// ------------------- Event Listeners -------------------
 document.getElementById("nextBtn").onclick = nextPage;
 
+// ------------------- Initialize -------------------
 loadPage();

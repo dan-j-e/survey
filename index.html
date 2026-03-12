@@ -1,26 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Player Survey</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="card">
+    <!-- Progress Bar -->
+    <div id="progress-container">
+      <div id="progress-bar">
+        <div id="progress-fill"></div>
+      </div>
+      <span id="progress-text">1 / 15</span>
+    </div>
 
-<h2 id="progressText">Page 1 / 15</h2>
-<div class="progress-container">
-  <div id="progressBar"></div>
-</div>
+    <!-- Locked Image -->
+    <div class="image-container">
+      <img id="surveyImage" src="images/p1.jpg" alt="Survey Image">
+      <div id="description">Image description here</div>
+    </div>
 
-<div class="card">
-  <img id="surveyImage">
-  <p id="description"></p>
-</div>
+    <!-- Scrollable Questions -->
+    <div id="questions-container">
+      <div id="questions"></div>
+    </div>
 
-<div id="questions"></div>
+    <!-- Next Button -->
+    <button id="nextBtn" disabled>Next</button>
+  </div>
 
-<button id="nextBtn">Next</button>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
