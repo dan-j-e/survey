@@ -1,6 +1,5 @@
 // Survey Data
 const imageLibrary = [
-  {player:"Deni Avdija", img:"images/p1.png", text:"Name: Deni. Height: 6'9''. Visible Tattoos: N. Heritage: Israel"},
   {player:"Jabari Smith Jr.", img:"images/p2.png", text:"Name: Jabari. Height: 6'11''. Visible Tattoos: Y. Heritage: USA"},
   {player:"Jayson Tatum", img:"images/p3.png", text:"Name: Jayson. Height: 6'8''. Visible Tattoos: Y. Heritage: USA"},
   {player:"Nic Claxton", img:"images/p4.png", text:"Name: Nic. Height: 6'11''. Visible Tattoos: Y. Heritage: USA"},
@@ -12,6 +11,7 @@ const imageLibrary = [
   {player:"Max Strus", img:"images/p10.png", text:"Name: Max. Height: 6'5''. Visible Tattoos: N. Heritage: USA"},
   {player:"Moe Wagner", img:"images/p11.png", text:"Name: Moe. Height: 6'11''. Visible Tattoos: N. Heritage: Germany"},
   {player:"Dwight Howard", img:"images/p12.png", text:"Name: Dwight. Height: 6'10''. Visible Tattoos: Y. Heritage: USA"},
+  {player:"Deni Avdija", img:"images/p1.png", text:"Name: Deni. Height: 6'9''. Visible Tattoos: N. Heritage: Israel"},
   {player:"Chris Goulding", img:"images/p13.png", text:"Name: Chris. Height: 6'5''. Visible Tattoos: N. Heritage: Australia"},
   {player:"Lucas Noguiera", img:"images/p14.png", text:"Name: Lucas. Height: 7'0''. Visible Tattoos: Y. Heritage: Brazil"},
   {player:"Chris Anderson", img:"images/p15.png", text:"Name: Chris. Height: 6'9''. Visible Tattoos: Y. Heritage: USA"},
@@ -25,111 +25,350 @@ const surveyQuestions = [
   "Please rate your overall level of attraction."
 ];
 
-const surveyItems = imageLibrary.slice(0, 15);
-let page = 0;
-let responses = [];
+const surveyItems = imageLibrary.slice(0,15);
 
-function loadPage() {
-  updateProgress();
+// ------------------- State -------------------
 
-  const item = surveyItems[page];
-  document.getElementById("surveyImage").src = item.img;
+let page = Number(localStorage.getItem("surveyPage")) || -1;
+let responses = JSON.parse(localStorage.getItem("surveyResponses")) || [];
+let participantName = localStorage.getItem("surveyName") || "";
 
-  // Extract info from item.text
-  // Example format: "Name: Deni. Height: 6'9''. Visible Tattoos: N. Heritage: Israel"
-  const matchName = item.text.match(/Name: (\w+)/);
-  const matchHeight = item.text.match(/Height: ([^\.]+)/);
-  const matchTats = item.text.match(/Visible Tattoos: ([YN])/);
-  const matchHeritage = item.text.match(/Heritage: (\w+)/);
+// ------------------- Load Page -------------------
 
-  document.getElementById("player-name").innerText = matchName ? matchName[1] : '';
-  
-  document.getElementById("info-bubbles").innerHTML = `
-    <span>Height: ${matchHeight ? matchHeight[1] : ''}</span>
-    <span>Visible Tattoos: ${matchTats ? matchTats[1] : ''}</span>
-    <span>From: ${matchHeritage ? matchHeritage[1] : ''}</span>
-  `;
+function loadPage(){
 
-  let html = "";
-  surveyQuestions.forEach((qText, index) => {
-  const i = index + 1;
-  html += `
-    <div class="question">
-      <p>${qText}</p>
-      <div class="bubble-row">
-        ${[0,1,2,3,4,5].map(v => `
-          <label>
-            <input type="radio" name="q${i}" value="${v}">
-            <span>${v}</span>
-          </label>
-        `).join('')}
-      </div>
-    </div>
-  `;
-});
+const nextBtn=document.getElementById("nextBtn")
+const backBtn=document.getElementById("backBtn")
 
-  document.getElementById("questions").innerHTML = html;
+// reset button text every page
+nextBtn.innerText="Next"
 
-  const nextBtn = document.getElementById("nextBtn");
-  nextBtn.disabled = true;
+backBtn.style.display = page <= -1 ? "none" : "inline-block"
 
-  const radios = document.querySelectorAll("#questions input[type=radio]");
-  radios.forEach(r => r.addEventListener("change", checkAllAnswered));
+// ---------- Welcome ----------
+
+if(page===-1){
+
+document.getElementById("surveyImage").style.display="none"
+document.getElementById("player-name").innerText=""
+document.getElementById("info-bubbles").innerHTML=""
+
+document.getElementById("questions").innerHTML=`
+
+<div style="text-align:center;max-width:500px;margin:auto;">
+
+<h2>Welcome.</h2>
+<h3>I'm Daniel, somehow you know me.
+<br>Here is my survey.
+</h3>
+
+<p>
+The following questions relate to a presentation that will be held later in April.
+Please answer honestly and only once.
+</p>
+
+<p>This survey should take about <b>5 minutes</b>.</p>
+
+<p><b>Enter your first name and last initial to begin:</b></p>
+
+<input id="nameInput"
+type="text"
+placeholder="Example: Daniel E"
+value="${participantName}"
+style="
+padding:10px;
+font-size:16px;
+width:70%;
+border-radius:8px;
+border:1px solid #ccc;
+text-align:center;
+">
+
+</div>
+`
+
+nextBtn.disabled = participantName.length < 2
+
+document.getElementById("nameInput").addEventListener("input",e=>{
+
+participantName=e.target.value.trim()
+
+localStorage.setItem("surveyName",participantName)
+
+nextBtn.disabled=participantName.length<2
+
+})
+
+updateProgress()
+
+return
 }
 
-function updateProgress() {
-  const fillPercent = (page / surveyItems.length) * 100;
-  document.getElementById('progress-fill').style.width = fillPercent + '%';
-  document.getElementById('progress-text').innerText = `${page + 1} / ${surveyItems.length}`;
+// ---------- End Page ----------
+
+if(page===surveyItems.length){
+
+document.getElementById("surveyImage").style.display="none"
+document.getElementById("player-name").innerText=""
+document.getElementById("info-bubbles").innerHTML=""
+
+document.getElementById("questions").innerHTML=`
+
+<div style="text-align:center;max-width:500px;margin:auto;">
+
+<h2>Thank you for your time!</h2>
+
+<p>
+It would greatly help our research if you could provide a few
+features you find attractive. The more you can offer, the more we can all learn!
+<br>This response will be recorded anonymously.
+</p>
+
+<textarea id="featureInput"
+placeholder="Sample responses: 
+1. I like dudes with no hair and lots of piercings...
+2. I think eyes are an important feature...
+3. Daniel, can I get a reward?..."
+style="
+width:100%;
+height:100px;
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+"></textarea>
+
+<br><br>
+
+<button id="resetBtn" style="
+padding:10px 20px;
+border-radius:8px;
+border:none;
+background:#ccc;
+cursor:pointer;
+font-weight:bold;
+">
+Back to start?
+</button>
+
+</div>
+`
+
+document.getElementById("resetBtn").onclick=()=>{
+
+if(confirm("This will erase all your answers and restart the survey. Continue?")){
+
+localStorage.removeItem("surveyResponses")
+localStorage.removeItem("surveyPage")
+localStorage.removeItem("surveyName")
+localStorage.removeItem("surveyTaken")
+
+responses=[]
+participantName=""
+page=-1
+
+// progress bar polish reset
+document.getElementById("progress-fill").style.width="0%"
+document.getElementById("progress-text").innerText=`1 / ${surveyItems.length}`
+
+loadPage()
+
 }
 
-function checkAllAnswered() {
-  let allAnswered = true;
-  for (let i = 1; i <= 5; i++) {
-    if (!document.querySelector(`input[name="q${i}"]:checked`)) {
-      allAnswered = false;
-      break;
-    }
-  }
-  document.getElementById("nextBtn").disabled = !allAnswered;
 }
 
-function nextPage() {
-  const nextBtn = document.getElementById("nextBtn");
-  nextBtn.disabled = true;
+nextBtn.innerText="Submit"
 
-  let answers = [];
-  for (let i = 1; i <= 5; i++) {
-    const checked = document.querySelector(`input[name="q${i}"]:checked`);
-    if (!checked) {
-      alert("Please answer all questions");
-      nextBtn.disabled = false;
-      return;
-    }
-    answers.push(checked.value);
-  }
-
-  responses.push({
-    player: surveyItems[page].player,
-    scores: answers
-  });
-
-  page++;
-  if (page >= surveyItems.length) {
-    submitSurvey();
-  } else {
-    loadPage();
-  }
+return
 }
 
-function submitSurvey() {
-  fetch("https://script.google.com/macros/s/AKfycbzFaLXQI70utF-tR1tiuxN8Rh-XfWGtxYYaPiPVm2RnJ7E-88xqFcwi_vMbmy-GzH1F/exec", {
-    method: "POST",
-    body: JSON.stringify(responses)
-  });
-  document.body.innerHTML = "<h2>Thank you for completing the survey!</h2>";
+// ---------- Survey Page ----------
+
+document.getElementById("surveyImage").style.display="block"
+
+updateProgress()
+
+const item=surveyItems[page]
+
+document.getElementById("surveyImage").src=item.img
+
+const matchName=item.text.match(/Name: (\w+)/)
+const matchHeight=item.text.match(/Height: ([^\.]+)/)
+const matchTats=item.text.match(/Visible Tattoos: ([YN])/)
+const matchHeritage=item.text.match(/Heritage: (\w+)/)
+
+document.getElementById("player-name").innerText=matchName?matchName[1]:""
+
+document.getElementById("info-bubbles").innerHTML=`
+
+<span>Height: ${matchHeight?matchHeight[1]:""}</span>
+<span>Tattoos: ${matchTats?matchTats[1]:""}</span>
+<span>From: ${matchHeritage?matchHeritage[1]:""}</span>
+
+`
+
+let html=""
+
+surveyQuestions.forEach((q,index)=>{
+
+const i=index+1
+const saved=responses[page]?.scores?.[index]
+
+html+=`
+
+<div class="question">
+
+<p>${q}</p>
+
+<div class="bubble-row">
+
+${[0,1,2,3,4,5].map(v=>`
+
+<label>
+
+<input type="radio" name="q${i}" value="${v}" ${saved==v?"checked":""}>
+
+<span>${v}</span>
+
+</label>
+
+`).join("")}
+
+</div>
+
+</div>
+
+`
+
+})
+
+document.getElementById("questions").innerHTML=html
+
+const radios=document.querySelectorAll("input[type=radio]")
+
+radios.forEach(r=>{
+r.addEventListener("change",checkAllAnswered)
+})
+
+checkAllAnswered()
+
+// focus first question for tab navigation
+setTimeout(()=>{
+const firstBubble=document.querySelector('input[name="q1"]')
+if(firstBubble){ firstBubble.focus() }
+},50)
+
 }
 
-document.getElementById("nextBtn").onclick = nextPage;
+// ------------------- Progress -------------------
 
-loadPage();
+function updateProgress(){
+
+const fill=((Math.max(page,0))/surveyItems.length)*100
+
+document.getElementById("progress-fill").style.width=fill+"%"
+
+document.getElementById("progress-text").innerText=`${Math.max(page+1,1)} / ${surveyItems.length}`
+
+}
+
+// ------------------- Check Answers -------------------
+
+function checkAllAnswered(){
+
+let complete=true
+
+for(let i=1;i<=surveyQuestions.length;i++){
+
+if(!document.querySelector(`input[name="q${i}"]:checked`)){
+complete=false
+break
+}
+
+}
+
+document.getElementById("nextBtn").disabled=!complete
+
+}
+
+// ------------------- Next -------------------
+
+function nextPage(){
+
+if(page>=0 && page<surveyItems.length){
+
+let answers=[]
+
+for(let i=1;i<=surveyQuestions.length;i++){
+
+const checked=document.querySelector(`input[name="q${i}"]:checked`)
+answers.push(checked.value)
+
+}
+
+responses[page]={
+player:surveyItems[page].player,
+scores:answers
+}
+
+localStorage.setItem("surveyResponses",JSON.stringify(responses))
+
+}
+
+page++
+localStorage.setItem("surveyPage",page)
+
+loadPage()
+
+}
+
+// ------------------- Back -------------------
+
+function prevPage(){
+
+page--
+localStorage.setItem("surveyPage",page)
+
+loadPage()
+
+}
+
+// ------------------- Submit -------------------
+
+function submitSurvey(){
+
+const featureText=document.getElementById("featureInput")?.value || ""
+
+const payload={
+name:participantName,
+features:featureText,
+responses:responses
+}
+
+fetch("https://script.google.com/macros/s/AKfycbzFaLXQI70utF-tR1tiuxN8Rh-XfWGtxYYaPiPVm2RnJ7E-88xqFcwi_vMbmy-GzH1F/exec",{
+method:"POST",
+body:JSON.stringify(payload)
+})
+
+localStorage.setItem("surveyTaken","true")
+
+document.body.innerHTML="<h2 style='text-align:center'>Survey submitted. Thank you!</h2>"
+
+}
+
+// ------------------- Buttons -------------------
+
+document.getElementById("nextBtn").onclick=()=>{
+
+if(page===surveyItems.length){
+submitSurvey()
+}else{
+nextPage()
+}
+
+}
+
+document.getElementById("backBtn").onclick=prevPage
+
+// ------------------- Start -------------------
+
+loadPage()
