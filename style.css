@@ -8,12 +8,16 @@ body {
   margin: 0;
   height: 100vh;
   overflow: hidden;  /* prevent page scroll */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 .card {
   width: 80vw;
   max-width: 700px;
-  max-height: 90vh; /* fits viewport */
+  max-height: calc(110vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 40px);
   display: flex;
   flex-direction: column;
   background: #EAEFEF;
@@ -177,22 +181,23 @@ button#nextBtn:hover:enabled {
 }
 
 /* Responsive */
+
 @media (max-width: 480px) {
   .card {
     width: 95vw;
-    max-height: 95vh;
-    padding: 15px;
+    max-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 15px);
+    padding: 10px;
   }
   #surveyImage {
-    height: 250px;
+    height: 200px;
   }
   input[type="radio"] + span {
-    font-size: 14px;
-    height: 35px;
-    line-height: 35px;
+    font-size: 12px;
+    height: 30px;
+    line-height: 30px;
   }
   button#nextBtn {
-    font-size: 16px;
-    padding: 12px;
+    font-size: 14px;
+    padding: 10px;
   }
 }
