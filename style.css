@@ -232,7 +232,7 @@ button#nextBtn:hover:enabled {
     line-height: 35px;
   }
   button#nextBtn {
-    font-size: 14px;
+    font-size: 18px;
     padding: 10px;
   }
 }
