@@ -1,20 +1,20 @@
 // ------------------- Survey Data -------------------
 const imageLibrary = [
-  {player:"Player1", img:"images/p1.png", text:"Name: Deni. Height: 6'8''"},
-  {player:"Player2", img:"images/p2.png", text:"Player 2 description"},
-  {player:"Player3", img:"images/p3.jpg", text:"Player 3 description"},
-  {player:"Player4", img:"images/p4.jpg", text:"Player 4 description"},
-  {player:"Player5", img:"images/p5.jpg", text:"Player 5 description"},
-  {player:"Player6", img:"images/p6.jpg", text:"Player 6 description"},
-  {player:"Player7", img:"images/p7.jpg", text:"Player 7 description"},
-  {player:"Player8", img:"images/p8.jpg", text:"Player 8 description"},
-  {player:"Player9", img:"images/p9.jpg", text:"Player 9 description"},
-  {player:"Player10", img:"images/p10.jpg", text:"Player 10 description"},
-  {player:"Player11", img:"images/p11.jpg", text:"Player 11 description"},
-  {player:"Player12", img:"images/p12.jpg", text:"Player 12 description"},
-  {player:"Player13", img:"images/p13.jpg", text:"Player 13 description"},
-  {player:"Player14", img:"images/p14.jpg", text:"Player 14 description"},
-  {player:"Player15", img:"images/p15.jpg", text:"Player 15 description"},
+{player:"Deni Avdija", img:"images/p1.png", text:"Name: Deni. Height: 6'9''. Visible Tattoos: N. Heritage: Israel"},
+{player:"Jabari Smith Jr.", img:"images/p2.png", text:"Name: Jabari. Height: 6'11''. Visible Tattoos: Y. Heritage: USA"},
+{player:"Jayson Tatum", img:"images/p3.png", text:"Name: Jayson. Height: 6'8''. Visible Tattoos: Y. Heritage: USA"},
+{player:"Nic Claxton", img:"images/p4.png", text:"Name: Nic. Height: 6'11''. Visible Tattoos: Y. Heritage: USA"},
+{player:"Kelly Oubre Jr.", img:"images/p5.png", text:"Name: Kelly. Height: 6'8''. Visible Tattoos: Y. Heritage: USA"},
+{player:"Blake Griffin", img:"images/p6.png", text:"Name: Blake. Height: 6'9''. Visible Tattoos: N. Heritage: USA"},
+{player:"Chandler Parsons", img:"images/p7.png", text:"Name: Chandler. Height: 6'9''. Visible Tattoos: N. Heritage: USA"},
+{player:"Lauri Markkanen", img:"images/p8.png", text:"Name: Lauri. Height: 7'1''. Visible Tattoos: N. Heritage: Finland"},
+{player:"Kyle Korver", img:"images/p9.png", text:"Name: Kyle. Height: 6'7''. Visible Tattoos: N. Heritage: USA"},
+{player:"Max Strus", img:"images/p10.png", text:"Name: Max. Height: 6'5''. Visible Tattoos: N. Heritage: USA"},
+{player:"Moe Wagner", img:"images/p11.png", text:"Name: Moe. Height: 6'11''. Visible Tattoos: N. Heritage: Germany"},
+{player:"Dwight Howard", img:"images/p12.png", text:"Name: Dwight. Height: 6'10''. Visible Tattoos: Y. Heritage: USA"},
+{player:"Chris Goulding", img:"images/p13.png", text:"Name: Chris. Height: 6'5''. Visible Tattoos: N. Heritage: Australia"},
+{player:"Lucas Noguiera", img:"images/p14.png", text:"Name: Lucas. Height: 7'0''. Visible Tattoos: Y. Heritage: Brazil"},
+{player:"Chris Anderson", img:"images/p15.png", text:"Name: Chris. Height: 6'9''. Visible Tattoos: Y. Heritage: USA"},
 ];
 
 // ------------------- Variables -------------------
@@ -108,7 +108,7 @@ function nextPage() {
 
 // ------------------- Submit Survey -------------------
 function submitSurvey() {
-  fetch("https://script.google.com/macros/s/AKfycbwYnHAuycDEcjQQ3fTzzOBeJvVdtbxCUSsTEWuR0quUtCYqMVCD2HBnUlp5_ZOXVEWz/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbzFaLXQI70utF-tR1tiuxN8Rh-XfWGtxYYaPiPVm2RnJ7E-88xqFcwi_vMbmy-GzH1F/exec", {
     method: "POST",
     body: JSON.stringify(responses)
   });
