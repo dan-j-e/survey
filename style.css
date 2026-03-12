@@ -1,7 +1,7 @@
 /* ------------------- Base Layout ------------------- */
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
-  background: #f7f7f7;
+  background: #BFC9D1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,7 +16,7 @@ body {
   max-height: 90vh; /* fits viewport */
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: #EAEFEF;
   border-radius: 12px;
   padding: 20px;
   box-sizing: border-box;
@@ -41,7 +41,7 @@ body {
 #progress-fill {
   height: 100%;
   width: 0%;
-  background: #4CAF50;
+  background: #F8B259;
   border-radius: 4px;
   transition: width 0.3s ease;
 }
@@ -129,8 +129,8 @@ input[type="radio"]:hover + span {
   background: #f0f0f0;
 }
 input[type="radio"]:checked + span {
-  border-color: #4CAF50;
-  background: #4CAF50;
+  border-color: #F8B259;
+  background: #F8B259;
   color: white;
 }
 input[type="radio"]:focus + span {
@@ -144,7 +144,7 @@ button#nextBtn {
   font-size: 18px;
   border: none;
   border-radius: 10px;
-  background: #4CAF50;
+  background: #F8B259;
   color: white;
   cursor: pointer;
   width: 100%;
