@@ -279,7 +279,7 @@ function submitSurvey(){
         features:featureText,
         responses:responses
     };
-    fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec",{
+    fetch("https://script.google.com/macros/s/AKfycbzFaLXQI70utF-tR1tiuxN8Rh-XfWGtxYYaPiPVm2RnJ7E-88xqFcwi_vMbmy-GzH1F/exec",{
         method:"POST",
         body:JSON.stringify(payload)
     });
