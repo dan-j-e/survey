@@ -271,6 +271,17 @@ document.getElementById("progress-text").innerText=`${Math.max(page+1,1)} / ${su
 
 }
 
+// ------------------- Duplicate Check -------------------
+
+if(localStorage.getItem("surveyTaken")==="true"){
+
+document.body.innerHTML=`
+<div style="text-align:center;margin-top:100px;">
+<h2>This survey has already been completed.</h2>
+</div>`
+
+}
+
 // ------------------- Check Answers -------------------
 
 function checkAllAnswered(){
