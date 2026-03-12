@@ -1,6 +1,6 @@
 // ------------------- Survey Data -------------------
 const imageLibrary = [
-  {player:"Player1", img:"images/p1.png", text:"Player 1 description"},
+  {player:"Player1", img:"images/p1.png", text:"Name: Deni. Height: 6'8''"},
   {player:"Player2", img:"images/p2.png", text:"Player 2 description"},
   {player:"Player3", img:"images/p3.jpg", text:"Player 3 description"},
   {player:"Player4", img:"images/p4.jpg", text:"Player 4 description"},
@@ -18,7 +18,7 @@ const imageLibrary = [
 ];
 
 // ------------------- Variables -------------------
-const surveyItems = imageLibrary.slice(0, 15); // fixed 15 players
+const surveyItems = imageLibrary.slice(0, 15);
 let page = 0;
 let responses = [];
 
@@ -34,38 +34,38 @@ function loadPage() {
   for (let i = 1; i <= 5; i++) {
     html += `
       <div class="question">
-        <p>Q${i}</p>
-        ${[0,1,2,3,4,5].map(v => `
-          <label>
-            <input type="radio" name="q${i}" value="${v}">
-            <span>${v}</span>
-          </label>
-        `).join('')}
+        <p>Q${i}:</p>
+        <div class="bubble-row">
+          ${[0,1,2,3,4,5].map(v => `
+            <label>
+              <input type="radio" name="q${i}" value="${v}">
+              <span>${v}</span>
+            </label>
+          `).join('')}
+        </div>
       </div>
     `;
   }
+
   document.getElementById("questions").innerHTML = html;
 
-  // ------------------- Reset Next button -------------------
   const nextBtn = document.getElementById("nextBtn");
   nextBtn.disabled = true;
 
-  // Scroll questions to top
-  document.getElementById("questions-container").scrollTop = 0;
-
-  // ------------------- Add listeners to new radio buttons -------------------
   const radios = document.querySelectorAll("#questions input[type=radio]");
-  radios.forEach(r => r.addEventListener("change", checkAllAnswered));
+  radios.forEach(r => {
+    r.addEventListener("change", checkAllAnswered);
+  });
 }
 
-// ------------------- Progress Bar -------------------
+// ------------------- Progress -------------------
 function updateProgress() {
   const fillPercent = (page / surveyItems.length) * 100;
   document.getElementById('progress-fill').style.width = fillPercent + '%';
   document.getElementById('progress-text').innerText = `${page + 1} / ${surveyItems.length}`;
 }
 
-// ------------------- Enable Next when all answered -------------------
+// ------------------- Enable Next Button -------------------
 function checkAllAnswered() {
   let allAnswered = true;
   for (let i = 1; i <= 5; i++) {
@@ -77,10 +77,10 @@ function checkAllAnswered() {
   document.getElementById("nextBtn").disabled = !allAnswered;
 }
 
-// ------------------- Go to Next Page -------------------
+// ------------------- Next Page -------------------
 function nextPage() {
   const nextBtn = document.getElementById("nextBtn");
-  nextBtn.disabled = true; // prevent double click
+  nextBtn.disabled = true;
 
   let answers = [];
   for (let i = 1; i <= 5; i++) {
@@ -112,7 +112,6 @@ function submitSurvey() {
     method: "POST",
     body: JSON.stringify(responses)
   });
-
   document.body.innerHTML = "<h2>Thank you for completing the survey!</h2>";
 }
 

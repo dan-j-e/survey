@@ -6,31 +6,30 @@ body {
   justify-content: center;
   align-items: center;
   margin: 0;
-  height: 100vh; /* vertically center the card */
+  height: 100vh;
+  overflow: hidden;  /* prevent page scroll */
 }
 
 .card {
+  width: 80vw;
+  max-width: 700px;
+  max-height: 90vh; /* fits viewport */
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 700px;
-  height: 80vh; /* fixed height */
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  overflow: hidden;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-/* ------------------- Progress Bar ------------------- */
+/* Progress Bar */
 #progress-container {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 8px 20px;
-  background: #f0f0f0;
-  box-sizing: border-box;
+  margin-bottom: 10px;
 }
-
 #progress-bar {
   flex: 1 1 auto;
   height: 8px;
@@ -39,7 +38,6 @@ body {
   margin-right: 12px;
   overflow: hidden;
 }
-
 #progress-fill {
   height: 100%;
   width: 0%;
@@ -47,117 +45,134 @@ body {
   border-radius: 4px;
   transition: width 0.3s ease;
 }
-
 #progress-text {
   flex: 0 0 auto;
   font-weight: bold;
   font-size: 14px;
 }
 
-/* ------------------- Image ------------------- */
+/* Image */
 .image-container {
-  flex: 0 0 auto;
-  width: 100%;
+  flex: 0 0 auto; /* fixed height container */
 }
-
 #surveyImage {
   width: 100%;
   height: 250px;
-  object-fit: cover;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #f0f0f0;
+  margin-bottom: 10px;
 }
-
 #description {
-  padding: 10px 20px;
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 15px;
 }
 
-/* ------------------- Questions Scrollable ------------------- */
+/* Questions */
 #questions-container {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  padding: 20px;
+  flex: 1 1 auto;       /* remaining space */
+  overflow-y: auto;     /* scroll only questions */
+  padding-right: 10px;
 }
-
-/* ------------------- Next Button ------------------- */
-button#nextBtn {
-  flex: 0 0 auto;
-  padding: 14px 30px;
-  font-size: 18px;
-  border: none;
-  border-radius: 0 0 12px 12px;
-  background: #4CAF50;
-  color: white;
-  cursor: pointer;
+.question {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  transition: background 0.2s;
+  margin-bottom: 10px;
+}
+.question p {
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-button#nextBtn:disabled {
-  background: #aaa;
-  cursor: not-allowed;
+/* Bubble Row */
+.bubble-row {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  gap: 5px;
 }
-
-button#nextBtn:hover:enabled {
-  background: #45a049;
+label {
+  flex: 1 1 0;
+  max-width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
 }
-
-/* ------------------- Bubbles (0-5) ------------------- */
 input[type="radio"] {
   opacity: 0;
-  width: 40px;
-  height: 40px;
   position: absolute;
+  width: 100%;
+  height: 100%;
   margin: 0;
-  cursor: pointer;
+  pointer-events: none; /* fix cursor flicker */
 }
-
 input[type="radio"] + span {
   display: inline-block;
-  width: 40px;
+  width: 100%;
   height: 40px;
   line-height: 40px;
-  border-radius: 50%;
+  border-radius: 10px;
   border: 2px solid #ccc;
   background: white;
-  color: #333;
   text-align: center;
   font-weight: bold;
-  margin-right: 10px;
-  cursor: pointer;
   transition: all 0.2s;
   user-select: none;
 }
-
 input[type="radio"]:hover + span {
   border-color: #999;
-  transform: scale(1.1);
+  background: #f0f0f0;
 }
-
 input[type="radio"]:checked + span {
   border-color: #4CAF50;
   background: #4CAF50;
   color: white;
-  transform: scale(1.2);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
-
 input[type="radio"]:focus + span {
   outline: 2px solid #2196F3;
   outline-offset: 3px;
 }
 
-/* ------------------- Responsive ------------------- */
+/* Next Button */
+button#nextBtn {
+  padding: 14px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background: #4CAF50;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s;
+  margin-top: 10px;
+}
+button#nextBtn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+button#nextBtn:hover:enabled {
+  background: #45a049;
+}
+
+/* Responsive */
 @media (max-width: 480px) {
+  .card {
+    width: 95vw;
+    max-height: 95vh;
+    padding: 15px;
+  }
   #surveyImage {
-    height: 200px;
+    height: 250px;
   }
   input[type="radio"] + span {
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
     font-size: 14px;
-    margin-right: 6px;
+    height: 35px;
+    line-height: 35px;
   }
   button#nextBtn {
     font-size: 16px;
