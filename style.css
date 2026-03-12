@@ -56,24 +56,25 @@ button#nextBtn:hover {
 
 /* ------------------- Bubbles (0-5) ------------------- */
 
-/* Radio inputs invisible but focusable */
+/* Radio inputs hidden but focusable */
 input[type="radio"] {
   opacity: 0;
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   position: absolute;
   margin: 0;
   cursor: pointer;
 }
 
-/* Bubble style */
+/* Bubble base (ring style) */
 input[type="radio"] + span {
   display: inline-block;
-  width: 45px;
-  height: 45px;
-  line-height: 45px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
   border-radius: 50%;
-  background: #eee;          /* unselected bubble color */
+  border: 2px solid #ccc;  /* ring */
+  background: white;        /* unselected fill */
   color: #333;
   text-align: center;
   font-weight: bold;
@@ -85,20 +86,20 @@ input[type="radio"] + span {
 
 /* Hover effect */
 input[type="radio"] + span:hover {
-  background: #ccc;
+  border-color: #999;
   transform: scale(1.1);
 }
 
-/* Selected bubble */
+/* Selected bubble (filled green) */
 input[type="radio"]:checked + span {
+  border-color: #4CAF50;
   background: #4CAF50;
   color: white;
-  transform: scale(1.3);
+  transform: scale(1.2);
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: all 0.2s;
 }
 
-/* Focused bubble for keyboard tab */
+/* Focus outline for keyboard tabbing */
 input[type="radio"]:focus + span {
   outline: 2px solid #2196F3;
   outline-offset: 3px;
@@ -110,10 +111,10 @@ input[type="radio"]:focus + span {
     padding: 15px;
   }
 
-  #questions label span {
-    width: 35px;
-    height: 35px;
-    line-height: 35px;
+  input[type="radio"] + span {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
     font-size: 14px;
     margin-right: 6px;
   }
