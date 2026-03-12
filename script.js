@@ -108,7 +108,7 @@ function nextPage() {
 
 // ------------------- Submit Survey -------------------
 function submitSurvey() {
-  fetch("YOUR_GOOGLE_SCRIPT_URL_HERE", {
+  fetch("https://script.google.com/macros/s/AKfycbwYnHAuycDEcjQQ3fTzzOBeJvVdtbxCUSsTEWuR0quUtCYqMVCD2HBnUlp5_ZOXVEWz/exec", {
     method: "POST",
     body: JSON.stringify(responses)
   });
