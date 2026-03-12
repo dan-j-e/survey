@@ -1,0 +1,87 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+  background: #f7f7f7;
+}
+
+h2 { text-align: center; }
+
+.progress-container {
+  width: 100%;
+  background: #ddd;
+  border-radius: 10px;
+  height: 12px;
+  margin-bottom: 20px;
+}
+
+#progressBar {
+  height: 12px;
+  width: 0%;
+  background: #4CAF50;
+  border-radius: 10px;
+  transition: width 0.3s;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+#questions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.question label {
+  margin-right: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  /* keep input focusable, make invisible */
+  opacity: 0;
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  margin: 0;
+  cursor: pointer;
+}
+
+input[type="radio"] + span {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 50%;
+  background: #ddd;
+  text-align: center;
+  user-select: none;
+  margin-right: 8px;
+  transition: all 0.2s;
+}
+
+/* checked state */
+input[type="radio"]:checked + span {
+  background: #4CAF50;
+  color: white;
+}
+
+/* focus state (for keyboard tabbing) */
+input[type="radio"]:focus + span {
+  outline: 2px solid #2196F3;
+  outline-offset: 2px;
+}
