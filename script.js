@@ -162,7 +162,27 @@ function loadPage(){
 
     const item = surveyItems[page];
 
-    document.getElementById("surveyImage").src = item.img;
+    // document.getElementById("surveyImage").src = item.img;
+    const imgEl = document.getElementById("surveyImage");
+
+    // fade out before loading
+    imgEl.style.opacity = 0;
+
+    // load image
+    imgEl.onload = () => {
+        imgEl.style.opacity = 1;
+    };
+
+    imgEl.src = item.img;
+
+    // 🔥 Preload NEXT image
+    const nextItem = surveyItems[page + 1];
+    if (nextItem) {
+        const img = new Image();
+        img.src = nextItem.img;
+    }
+
+
 
     const matchName = item.text.match(/Name: (\w+)/);
     const matchHeight = item.text.match(/Height: ([^\.]+)/);
