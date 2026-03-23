@@ -85,7 +85,8 @@ function loadPage(){
             <h2>Welcome.</h2>
             <h3>I'm Daniel, somehow you know me.<br>Here is my survey.</h3>
             <p>The following questions relate to a presentation that will be held later in April.
-            Please answer honestly and only once.</p>
+            Please answer honestly and only once. Some questions may not fit on your screen,
+            if so, please scroll.</p>
             <p>This survey should take about <b>5 minutes</b>.</p>
             <p><b>Enter your first name and last initial to begin:</b></p>
             <input id="nameInput" type="text" placeholder="Example: Daniel E"
