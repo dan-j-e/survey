@@ -15,7 +15,7 @@ const imageLibrary = [
 const surveyQuestions = [
     "Please rate your level of attraction to his smile.",
     "Please rate your level of attraction to his hairstyle/grooming.",
-    "Please rate your level of attraction to his level of tattoos/body mods.",
+    "Please rate your level of attraction to his eyes.",
     "Please rate your level of attraction to his listed height.",
     "Please rate your overall level of attraction."
 ];
@@ -115,7 +115,7 @@ function loadPage() {
                 <textarea id="featureInput"
                     placeholder="Sample responses:
 1. I like dudes with no hair and lots of piercings...
-2. I think eyes are an important feature...
+2. I think income is an important feature...
 3. Daniel, can I get a reward?..."
                     style="width:100%;height:100px;padding:10px;border-radius:8px;border:1px solid #ccc;"></textarea>
                 <br><br>
