@@ -3,7 +3,7 @@ const imageLibrary = [
     {player:"Christian Braun",   img:"images_v2/Christian.png", text:"Name: Christian. Height: 6'6''. Heritage: North America. Body Mods: N"},
     {player:"Bobi Klintman",     img:"images_v2/Bobi.png",      text:"Name: Bobi. Height: 6'9''. Heritage: Europe. Body Mods: Y"},
     {player:"Corey Kispert",     img:"images_v2/Corey.png",     text:"Name: Corey. Height: 6'6''. Heritage: North America. Body Mods: N"},
-    {player:"Craig Porter Jr.",  img:"images_v2/Craig.png",     text:"Name: Craig. Height: 6'2''. Heritage: North America. Body Mods: Y"},
+    {player:"Yuki Kawamura",     img:"images_v2/Yuki.png",      text:"Name: Yuki. Height: 5'7''. Heritage: Asia. Body Mods: N"},
     {player:"Dante Exum",        img:"images_v2/Dante.png",     text:"Name: Dante. Height: 6'5''. Heritage: Oceania. Body Mods: Y"},
     {player:"Domantas Sabonis",  img:"images_v2/Domas.png",     text:"Name: Domantas. Height: 6'10''. Heritage: Europe. Body Mods: N"},
     {player:"Dyson Daniels",     img:"images_v2/Dyson.png",     text:"Name: Dyson. Height: 6'7''. Heritage: Oceania. Body Mods: N"},
